@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  artist: one
+  festival: one
+  title: MyString
+  cover_photo: MyString
+  description: MyString
+  trailer_id: MyString
+  full_video_id: MyString
+
+two:
+  artist: two
+  festival: two
+  title: MyString
+  cover_photo: MyString
+  description: MyString
+  trailer_id: MyString
+  full_video_id: MyString
