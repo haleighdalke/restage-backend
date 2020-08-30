@@ -1,7 +1,7 @@
 class ArtistsController < ApplicationController
     def index 
         artists = Artist.all
-        render json: artists
+        render json: ArtistSerializer.new(artists).to_serialized_json
     end
 
     def new
@@ -10,12 +10,12 @@ class ArtistsController < ApplicationController
 
     def create 
         artist = Artist.create(artist_params)
-        render json: ArtistSerializer.new(artist)
+        render json: ArtistSerializer.new(artist).to_serialized_json
     end
 
     def show
         artist = Artist.find(params[:id])
-        render json: ArtistSerializer.new(artist)
+        render json: ArtistSerializer.new(artist).to_serialized_json
     end
 
     def edit
@@ -25,12 +25,12 @@ class ArtistsController < ApplicationController
     def update 
         artist = Artist.find(params[:id])
         Artist.update(artist_params)
-        render json: ArtistSerializer.new(artist)
+        render json: ArtistSerializer.new(artist).to_serialized_json
     end
 
     # def destroy 
     #     artist = Artist.find(params[:id]).destroy
-    #     render json: ArtistSerializer.new(artist)
+    #     render json: ArtistSerializer.new(artist).to_serialized_json
     # end 
 
     private

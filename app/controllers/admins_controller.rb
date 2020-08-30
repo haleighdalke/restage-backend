@@ -10,12 +10,12 @@ class AdminsController < ApplicationController
 
     def create 
         admin = Admin.create(admin_params)
-        render json: AdminSerializer.new(admin)
+        render json: AdminSerializer.new(admin).to_serialized_json
     end
 
     def show
         admin = Admin.find(params[:id])
-        render json: AdminSerializer.new(admin)
+        render json: AdminSerializer.new(admin).to_serialized_json
     end
 
     # def edit
@@ -25,12 +25,12 @@ class AdminsController < ApplicationController
     # def update 
     #     admin = Admin.find(params[:id])
     #     Admin.update(admin_params)
-    #     render json: AdminSerializer.new(admin)
+    #     render json: AdminSerializer.new(admin).to_serialized_json
     # end
 
     # def destroy 
     #     admin = Admin.find(params[:id]).destroy
-    #     render json: AdminSerializer.new(admin)
+    #     render json: AdminSerializer.new(admin).to_serialized_json
     # end 
 
     private
