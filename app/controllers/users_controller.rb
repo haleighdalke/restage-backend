@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     end
 
     def login
-        user = User.find_by(name: params[:name])
+        user = User.find_by(username: params[:username])
         if user && user.authenticate(params[:password])
             token = encode_token({user_id: user.id})
             render json: {user: UserSerializer.new(user).to_serialized_json, token: token}
@@ -26,8 +26,9 @@ class UsersController < ApplicationController
     end
 
     def persist
+        # byebug
         token = encode_token({user_id: @user.id})
-        render json: {user: UserSerializer.new(@user), token: token}
+        render json: {user: UserSerializer.new(@user).to_serialized_json, token: token}
     end
 
     def show
