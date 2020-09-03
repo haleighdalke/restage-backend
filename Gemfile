@@ -55,12 +55,13 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
  
 gem "jwt", "~> 2.1"
  
 gem "active_model_serializers", "~> 0.10.7"
  
 gem "faker"
+
+gem 'google-api-client', '>0.7'
+
+gem 'rest-client'
