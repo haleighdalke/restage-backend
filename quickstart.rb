@@ -70,6 +70,7 @@ channels_list_by_username(service, 'snippet,contentDetails,statistics', for_user
 # puts(service.list_playlist_items('id, snippet', playlist_id: 'PL9-LcCgTIujKGIMXaWpTWVi6CBUUyYVjR'))
 
 
+# Following format above, create a method to retrieve playlist video id's
 def videos_by_playlist(service, part, params)
   response = service.list_playlist_items(part, params).to_json
   item = JSON.parse(response).fetch("items")[0]
