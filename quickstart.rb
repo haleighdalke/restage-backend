@@ -75,8 +75,24 @@ end
 
 # Following format above, create a method to retrieve playlist video id's
 def videos_by_playlist(service, part, params)
-  response = service.list_playlist_items(part, params).to_json
-  ids = JSON.parse(response).fetch("items").collect{ |item| [item["snippet"]["title"], item["snippet"]["resourceId"]["videoId"]] }
-  ids
+  videos = []
+  next_page = ""
+
+  # while next pages, get all data
+  loop do
+    params[:page_token] = next_page
+    response = service.list_playlist_items(part, params).to_json
+    next_page = JSON.parse(response)["nextPageToken"]
+    raw_videos = JSON.parse(response).fetch("items")
+    videos = videos.concat(raw_videos.collect{ |item| 
+      { title: item["snippet"]["title"], 
+        video_id: item["snippet"]["resourceId"]["videoId"], 
+        description: item["snippet"]["description"],
+        cover_photo: item["snippet"]["thumbnails"]["high"]["url"]
+    }})
+  break if !next_page
+  end
+
+  videos
 end
 
