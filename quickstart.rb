@@ -1,6 +1,6 @@
 # Sample Ruby code for user authorization
 
-require 'rest-client'
+require 'byebug'
 require 'rubygems'
 gem 'google-api-client', '>0.7'
 require 'google/apis'
@@ -46,36 +46,37 @@ def authorize
   credentials
 end
 
-# Initialize the API
-service = Google::Apis::YoutubeV3::YouTubeService.new
-service.client_options.application_name = APPLICATION_NAME
-service.authorization = authorize
+# Initialize the API (moved to method below)
+
+# service = Google::Apis::YoutubeV3::YouTubeService.new
+# service.client_options.application_name = APPLICATION_NAME
+# service.authorization = authorize
+
+def getService
+  service = Google::Apis::YoutubeV3::YouTubeService.new
+  service.client_options.application_name = APPLICATION_NAME
+  service.authorization = authorize
+  service
+end
 
 # Sample ruby code for channels.list
 
-def channels_list_by_username(service, part, **params)
-  response = service.list_channels(part, params).to_json
-  item = JSON.parse(response).fetch("items")[0]
+# def channels_list_by_username(service, part, **params)
+#   response = service.list_channels(part, params).to_json
+#   item = JSON.parse(response).fetch("items")[0]
 
-  puts ("This channel's ID is #{item.fetch("id")}. " +
-        "Its title is '#{item.fetch("snippet").fetch("title")}', and it has " +
-        "#{item.fetch("statistics").fetch("viewCount")} views.")
+#   puts ("This channel's ID is #{item.fetch("id")}. " +
+#         "Its title is '#{item.fetch("snippet").fetch("title")}', and it has " +
+#         "#{item.fetch("statistics").fetch("viewCount")} views.")
 
-end
+# end
 
-channels_list_by_username(service, 'snippet,contentDetails,statistics', for_username: 'GoogleDevelopers')
-
-# puts(service)
-# puts(service.authorization)
-# puts(service.list_playlist_items('id, snippet', playlist_id: 'PL9-LcCgTIujKGIMXaWpTWVi6CBUUyYVjR'))
-
+# channels_list_by_username(getService(), 'snippet,contentDetails,statistics', for_username: 'GoogleDevelopers')
 
 # Following format above, create a method to retrieve playlist video id's
 def videos_by_playlist(service, part, params)
   response = service.list_playlist_items(part, params).to_json
-  item = JSON.parse(response).fetch("items")[0]
-
-  puts(item)
+  ids = JSON.parse(response).fetch("items").collect{ |item| [item["snippet"]["title"], item["snippet"]["resourceId"]["videoId"]] }
+  ids
 end
 
-videos_by_playlist(service, 'id,snippet', playlist_id: 'PL9-LcCgTIujKGIMXaWpTWVi6CBUUyYVjR')

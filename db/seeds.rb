@@ -89,7 +89,10 @@
 
 # ----------------------------------
 
-require '../quickstart.rb'
+require_relative('../quickstart.rb')
+
+ids = videos_by_playlist(getService(), 'id,snippet', playlist_id: 'PL9-LcCgTIujKGIMXaWpTWVi6CBUUyYVjR')
+puts(ids)
 
 # User.destroy_all
 # Artist.destroy_all
