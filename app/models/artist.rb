@@ -8,7 +8,7 @@ class Artist < ApplicationRecord
   validates :company_title, uniqueness: { case_sensitive: false }
   validates :company_title, length: {maximum: 100}
   validates :bio, length: {maximum: 500}
-  validates :user_id, :company_title, :bio, :headshot, presence: true
+  validates :user_id, :company_title, :bio, :photo, presence: true
 
 
   def getName
