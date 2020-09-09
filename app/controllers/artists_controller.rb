@@ -1,6 +1,7 @@
 class ArtistsController < ApplicationController
     def index 
-        artists = Artist.all
+        # added with_attached_headshot
+        artists = Artist.all.with_attached_headshot
         render json: ArtistSerializer.new(artists).to_serialized_json
     end
 
@@ -12,12 +13,12 @@ class ArtistsController < ApplicationController
 
         artist = Artist.create(artist_params)
         # headshot = url_for(artist.headshot)
-        render json: ArtistSerializer.new(artist).to_serialized_json
+        render json: {user: artist.user, company_title: artist.company_title, bio: artist.bio, photo: artist.photo, headshot: artist.headshot_blob}
     end
 
     def show
         artist = Artist.find(params[:id])
-        render json: ArtistSerializer.new(artist).to_serialized_json
+        render json: {user: artist.user, company_title: artist.company_title, bio: artist.bio, photo: artist.photo, headshot: artist.headshot_blob}
     end
 
     def edit
@@ -26,7 +27,6 @@ class ArtistsController < ApplicationController
 
     def update 
         artist = Artist.find(params[:id])
-        byebug
         Artist.update(artist_params)
         render json: ArtistSerializer.new(artist).to_serialized_json
     end
