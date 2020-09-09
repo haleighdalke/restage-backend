@@ -1,10 +1,22 @@
 class ArtistSerializer < ActiveModel::Serializer
-  attributes :id, :company_title, :bio, :photo
+  include Rails.application.routes.url_helpers
+
+  attributes :id, :company_title, :bio, :photo, :headshot_url
   has_one :user
+  # has_one_attached :headshot
 
   def initialize(artist_object)
     @artist = artist_object
   end
+
+  def headshot_url
+    return url_for(@artist.headshot)
+  end
+  
+  # def headshot_url
+  #   variant = @artist.headshot.variant(resize: "300x300")
+  #   return rails_representation_url(variant, only_path: true)
+  # end
  
   def to_serialized_json
     options = {

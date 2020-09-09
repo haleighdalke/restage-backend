@@ -9,7 +9,9 @@ class ArtistsController < ApplicationController
     end
 
     def create 
+
         artist = Artist.create(artist_params)
+        # headshot = url_for(artist.headshot)
         render json: ArtistSerializer.new(artist).to_serialized_json
     end
 
@@ -24,6 +26,7 @@ class ArtistsController < ApplicationController
 
     def update 
         artist = Artist.find(params[:id])
+        byebug
         Artist.update(artist_params)
         render json: ArtistSerializer.new(artist).to_serialized_json
     end
@@ -35,6 +38,6 @@ class ArtistsController < ApplicationController
 
     private
     def artist_params
-        params.require(:artist).permit(:user_id, :company_title, :bio, :photo)
+        params.permit(:user_id, :company_title, :bio, :photo, :headshot)
     end
 end

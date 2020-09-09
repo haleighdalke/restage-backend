@@ -10,7 +10,7 @@ class FestivalSerializer < ActiveModel::Serializer
     options = {
       :include => {
         :admin => {:only => [:id]},
-        :pieces => {:only => [:id, :title, :cover_photo, :description, :trailer_id, :full_video_id]}
+        :pieces => {:only => [:id, :title, :cover_photo, :description, :trailer_id, :full_video_id, :artist_id]}
       }, :except => [:admin_id, :updated_at, :created_at, :application_start_date, :application_end_date, :video_list]
     }
     @festival.to_json(options)

@@ -11,7 +11,7 @@ class PieceSerializer < ActiveModel::Serializer
     options = {
       :include => {
         :artist => {:only => [:id, :company_title]},
-        :festival => {:only => [:id, :title, :description]}
+        :festival => {:only => [:id, :title, :description, :release_date]}
       }, :except => [:artist_id, :festival_id, :updated_at, :created_at]
     }
     @piece.to_json(options)
