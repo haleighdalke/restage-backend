@@ -1,18 +1,18 @@
-class ArtistSerializer < ActiveModel::Serializer
+class ArtistSerializer < ActiveModel::Serializer 
   include Rails.application.routes.url_helpers
 
-  attributes :id, :company_title, :bio, :photo, :headshot_url
+  attributes :id, :company_title, :bio, :photo, :headshot
   has_one :user
-  # has_one_attached :headshot
 
   def initialize(artist_object)
     @artist = artist_object
   end
 
-  def headshot_url
-    return url_for(@artist.headshot)
-  end
-  
+  # def headshot
+  #   byebug
+  #   return rails_blob_path(@artist.headshot, disposition: "attachment", only_path: true) if @artist.headshot.attached?
+  # end
+
   # def headshot_url
   #   variant = @artist.headshot.variant(resize: "300x300")
   #   return rails_representation_url(variant, only_path: true)
