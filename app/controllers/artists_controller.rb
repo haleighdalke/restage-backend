@@ -1,4 +1,6 @@
 class ArtistsController < ApplicationController
+    include Rails.application.routes.url_helpers
+
     def index 
         # added with_attached_headshot
         artists = Artist.all.with_attached_headshot
@@ -10,15 +12,18 @@ class ArtistsController < ApplicationController
     end
 
     def create 
+        # byebug
 
         artist = Artist.create(artist_params)
-        # headshot = url_for(artist.headshot)
-        render json: {user: artist.user, company_title: artist.company_title, bio: artist.bio, photo: artist.photo, headshot: artist.headshot_blob}
+
+        # assign photo to the headshot URL for rendering
+        artist.update(photo: url_for(artist.headshot))
+        render json: ArtistSerializer.new(artist).to_serialized_json
     end
 
     def show
         artist = Artist.find(params[:id])
-        render json: {user: artist.user, company_title: artist.company_title, bio: artist.bio, photo: artist.photo, headshot: artist.headshot_blob}
+        render json: ArtistSerializer.new(artist).to_serialized_json
     end
 
     def edit
