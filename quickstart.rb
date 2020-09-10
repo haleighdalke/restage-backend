@@ -11,9 +11,6 @@ require 'googleauth/stores/file_token_store'
 require 'fileutils'
 require 'json'
 
-# require 'google/apis/drive_v2'
-# require 'google/api_client'
-
 # REPLACE WITH VALID REDIRECT_URI FOR YOUR CLIENT
 REDIRECT_URI = 'http://localhost'
 APPLICATION_NAME = 'YouTube Data API Ruby Tests'
@@ -49,12 +46,7 @@ def authorize
   credentials
 end
 
-# Initialize the API (moved to method below)
-
-# service = Google::Apis::YoutubeV3::YouTubeService.new
-# service.client_options.application_name = APPLICATION_NAME
-# service.authorization = authorize
-
+# Initialize the API
 def getService
   service = Google::Apis::YoutubeV3::YouTubeService.new
   service.client_options.application_name = APPLICATION_NAME
@@ -62,21 +54,6 @@ def getService
   service
 end
 
-# Sample ruby code for channels.list
-
-# def channels_list_by_username(service, part, **params)
-#   response = service.list_channels(part, params).to_json
-#   item = JSON.parse(response).fetch("items")[0]
-
-#   puts ("This channel's ID is #{item.fetch("id")}. " +
-#         "Its title is '#{item.fetch("snippet").fetch("title")}', and it has " +
-#         "#{item.fetch("statistics").fetch("viewCount")} views.")
-
-# end
-
-# channels_list_by_username(getService(), 'snippet,contentDetails,statistics', for_username: 'GoogleDevelopers')
-
-# Following format above, create a method to retrieve playlist video id's
 def videos_by_playlist(service, part, params)
   videos = []
   next_page = ""
@@ -99,27 +76,37 @@ def videos_by_playlist(service, part, params)
   videos
 end
 
-puts(videos_by_playlist(getService(), 'id,snippet', {playlist_id: 'PL9-LcCgTIujKGIMXaWpTWVi6CBUUyYVjR', page_token: ''}))
 
-# upload a video
+# UPLOAD A VIDEO METHOD (not working)
+# def upload_video(service, video, title, description)
+#   byebug
 
-def upload_video(service, video, title, description)
-  byebug
+#   # body = {snippet_title: title, snippet_description: description}
+#   # result = service.insert_video('id,snippet,status', body, video)
 
-  # body = {snippet_title: title, snippet_description: description}
-  # result = service.insert_video('id,snippet,status', body, video)
+#   opts = {keywords: ['dance', 'art']}
 
-  opts = {keywords: ['dance', 'art']}
+#   body = {
+#     snippet: {
+#       title: title,
+#       description: description,
+#       tags: opts[:keywords].split(',')
+#     }
+#   }
 
-  body = {
-    snippet: {
-      title: title,
-      description: description,
-      tags: opts[:keywords].split(',')
-    }
-  }
+#   service.insert_video('snippet', body, upload_source:video,content_type:'video/*')
 
-  service.insert_video('snippet', body, upload_source:video,content_type:'video/*')
+#   byebug
+# end
 
-  byebug
-end
+# ERROR MESSAGE FOR ABOVE:
+  # Completed 500 Internal Server Error in 4314ms (ActiveRecord: 4.1ms | Allocations: 128001)
+
+
+  # [ActiveJob] [ActiveStorage::AnalyzeJob] [c31617d7-eea9-4a4e-a1be-50c4c32a0bd1] Performing ActiveStorage::AnalyzeJob (Job ID: c31617d7-eea9-4a4e-a1be-50c4c32a0bd1) from Async(active_storage_analysis) enqueued at 2020-09-10T20:56:34Z with arguments: #<GlobalID:0x00007f82b1340f68 @uri=#<URI::GID gid://restage-backend/ActiveStorage::Blob/29>>
+    
+  # NoMethodError (undefined method `new' for :DriveService:Symbol
+  # Did you mean?  next):
+    
+  # app/models/piece.rb:19:in `upload_trailer'
+  # app/controllers/pieces_controller.rb:21:in `create'
