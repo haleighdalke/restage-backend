@@ -12,8 +12,6 @@ class ArtistsController < ApplicationController
     end
 
     def create 
-        # byebug
-
         artist = Artist.create(artist_params)
 
         # assign photo to the headshot URL for rendering

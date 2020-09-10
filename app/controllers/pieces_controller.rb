@@ -1,6 +1,3 @@
-require_relative('../../quickstart.rb')
-require 'byebug'
-
 class PiecesController < ApplicationController
     include Rails.application.routes.url_helpers
 
@@ -14,13 +11,20 @@ class PiecesController < ApplicationController
     end
 
     def create 
+
         piece = Piece.create(piece_params)
         byebug
-        # take params and upload short_video & long_video to YouTubeAPI, and store photo in active storage
-        # return video_id's and set trailer_id & full_video_id to these ids
 
-        # piece.update(trailer_id: null, full_video_id: null)
+        # don't save in active storage (save in api)
+        piece.upload_trailer(params[:short_video])
+        piece.upload_full_video(params[:long_video])
 
+        piece.save
+
+        # save in active storage
+        piece.update(cover_photo: url_for(piece.image))
+
+        byebug
         render json: PieceSerializer.new(piece).to_serialized_json
     end
 
@@ -45,7 +49,9 @@ class PiecesController < ApplicationController
     # end 
 
     private
+
     def piece_params
-        params.permit(:artist_id, :festival_id, :title, :cover_photo, :description, :trailer_id, :full_video_id, :short_video, :long_video, :image)
+        params.permit(:artist_id, :festival_id, :title, :description, :image, :short_video, :long_video, :cover_photo)
     end
+
 end
