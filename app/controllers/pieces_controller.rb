@@ -16,7 +16,9 @@ class PiecesController < ApplicationController
         byebug
 
         # don't save in active storage (save in api)
-        piece.upload_trailer(params[:short_video])
+        url = url_for(piece.short_video)
+
+        piece.upload_trailer(url)
         piece.upload_full_video(params[:long_video])
 
         piece.save

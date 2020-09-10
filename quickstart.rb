@@ -11,7 +11,7 @@ require 'googleauth/stores/file_token_store'
 require 'fileutils'
 require 'json'
 
-require 'google/apis/drive_v2'
+# require 'google/apis/drive_v2'
 # require 'google/api_client'
 
 # REPLACE WITH VALID REDIRECT_URI FOR YOUR CLIENT
@@ -106,20 +106,20 @@ puts(videos_by_playlist(getService(), 'id,snippet', {playlist_id: 'PL9-LcCgTIujK
 def upload_video(service, video, title, description)
   byebug
 
+  # body = {snippet_title: title, snippet_description: description}
+  # result = service.insert_video('id,snippet,status', body, video)
 
-  drive = Google::Apis::DriveV2:DriveService.new
-  drive.authorization = authorize
+  opts = {keywords: ['dance', 'art']}
 
-  byebug
+  body = {
+    snippet: {
+      title: title,
+      description: description,
+      tags: opts[:keywords].split(',')
+    }
+  }
 
-  drive_video = drive.insert_file({title: title}, upload_source: video, content_type: video.content_type)
-
-
-  byebug
-
-  body = {snippet_title: title, snippet_description: description}
-
-  result = service.insert_video('id,snippet,status', body, video)
+  service.insert_video('snippet', body, upload_source:video,content_type:'video/*')
 
   byebug
 end
