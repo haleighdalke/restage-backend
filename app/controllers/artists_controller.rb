@@ -3,7 +3,7 @@ class ArtistsController < ApplicationController
 
     def index 
         # added with_attached_headshot
-        artists = Artist.all.with_attached_headshot
+        artists = Artist.all
         render json: ArtistSerializer.new(artists).to_serialized_json
     end
 
