@@ -30,7 +30,7 @@ class ArtistsController < ApplicationController
 
     def update 
         artist = Artist.find(params[:id])
-        Artist.update(artist_params)
+        artist.update(artist_params)
         render json: ArtistSerializer.new(artist).to_serialized_json
     end
 
