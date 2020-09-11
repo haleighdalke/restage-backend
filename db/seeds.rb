@@ -22,6 +22,12 @@ headshots = [
     'https://images.unsplash.com/photo-1575222162066-b8b0eabbea75?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80'
 ]
 
+# playlists = ['PL9-LcCgTIujLZVu-x_Oc1LbNiONKY--Hz', 'PL9-LcCgTIujK9EQTBJxAd963D7YxrXQiH', 'PL9-LcCgTIujJd3rvDu5-p9w7foi6oCtlV', 'PLDH-IuxbMOftkzriSYNQ6mXtry9rYO-XP', 'PLO3MEeCjYca8gehkLykvVrFry809-DLQt']
+
+# all_videos = playlists.map do |playlist| 
+#     videos_by_playlist(getService(), 'id,snippet', {playlist_id: playlist, page_token: ''})
+# end
+
 videos = videos_by_playlist(getService(), 'id,snippet', {playlist_id: 'PL9-LcCgTIujKGIMXaWpTWVi6CBUUyYVjR', page_token: ''})
 
 cover_photos = [

@@ -11,6 +11,9 @@ class Piece < ApplicationRecord
   # has_one_attached :short_video
   # has_one_attached :long_video
 
+  validates :title, length: {maximum: 100}
+  validates :description, length: {maximum: 500}
+
   # validates :artist_id, :title, :description, :trailer_id, :full_video_id, presence: true
 
 
@@ -41,4 +44,4 @@ class Piece < ApplicationRecord
 #       self.full_video_id = id
 #   end
 
-# end
+end
