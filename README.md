@@ -29,6 +29,8 @@ To run this project, please run the following in your terminal:
 ```
 $ cd ./restage-backend     # be sure you're in this file directory
 $ bundle install           # install necessary gems
+$ rails db:migrate         # run the migrations
+$ rails db:seed            # seed data
 $ rails s                  # begin the server (must be running on http://localhost:3000/)
 ```
 Once the server is up and running, follow directions for setting up the frontend
