@@ -65,3 +65,5 @@ gem "faker"
 gem 'google-api-client', '>0.7'
 
 gem 'rest-client'
+
+gem "flickraw"

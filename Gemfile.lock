@@ -98,6 +98,7 @@ GEM
     ffi (1.13.1-java)
     ffi (1.13.1-x64-mingw32)
     ffi (1.13.1-x86-mingw32)
+    flickraw (0.9.10)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     google-api-client (0.44.1)
@@ -325,6 +326,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   faker
+  flickraw
   google-api-client (> 0.7)
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
