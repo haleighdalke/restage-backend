@@ -15,15 +15,16 @@ require 'byebug'
 #       :title=>"(C)ARBON", 
 #       :description=>"Gallim's Artistic Director Andrea Miller (currently the Met Artist-in-Residence), presents (C)arbon, a three-gallery performance installation of dance, film, sculpture and soundscape on the phenomenon of the body. Performed by six dancers, this anthropological study of the body dedicates each gallery to a state of the body's experience (individual, duel relations, and en masse). (C)arbon will be exhibited in conjunction with The Met Breuer's exhibition, Like Life: Sculpture, Color, and the Body, examining 700 years of sculpture of the human body."}
 
-festival_cover_photos = get_flickr_photos('72157717711904157')
-piece_cover_photos = get_flickr_photos('72157717707882863')
-headshots = get_flickr_photos('72157717707858908')
-
 # playlists = ['PL9-LcCgTIujLZVu-x_Oc1LbNiONKY--Hz', 'PL9-LcCgTIujK9EQTBJxAd963D7YxrXQiH', 'PL9-LcCgTIujJd3rvDu5-p9w7foi6oCtlV', 'PLDH-IuxbMOftkzriSYNQ6mXtry9rYO-XP', 'PLO3MEeCjYca8gehkLykvVrFry809-DLQt']
 
 # all_videos = playlists.map do |playlist| 
 #     videos_by_playlist(getService(), 'id,snippet', {playlist_id: playlist, page_token: ''})
 # end
+
+
+festival_cover_photos = get_flickr_photos('72157717711904157')
+piece_cover_photos = get_flickr_photos('72157717707882863')
+headshots = get_flickr_photos('72157717707858908')
 
 videos = videos_by_playlist(getService(), 'id,snippet', {playlist_id: 'PL9-LcCgTIujKGIMXaWpTWVi6CBUUyYVjR', page_token: ''})
 
@@ -54,15 +55,6 @@ for artist in headshots do
     )
 end
 
-# 10.times do
-#     Artist.create(
-#         user_id: User.all.sample.id,
-#         company_title: Faker::Movies::StarWars.vehicle,
-#         bio: Faker::Movies::StarWars.quote,
-#         photo: headshots.sample
-#     )
-# end
-
 Admin.create(
     user_id: User.all.last.id,
     authorization_code: "dockingbay94",
@@ -82,20 +74,6 @@ for piece in festival_cover_photos do
         video_list: ""
     )
 end
-
-# 5.times do
-#     Festival.create(
-#         admin_id: Admin.all.first.id,
-#         title: Faker::Movies::StarWars.planet,
-#         description: Faker::Hipster.paragraph,
-#         cover_photo: festival_cover_photos.sample,
-#         application_start_date: Faker::Date.between(Date.new(2020,3,15), Date.new(2020,6,15)),
-#         application_end_date: Faker::Date.between(Date.new(2020,6,16), Date.new(2020,9,1)),
-#         release_date: Faker::Date.between(Date.new(2020,9,2), Date.new(2020,10,15)),
-#         video_list: ""
-#     )
-# end
-
 
 20.times do
     video = videos.sample
